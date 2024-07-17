@@ -1,3 +1,5 @@
+const fishingView = require("../views/fishingView");
+
 class ButtonInteractionEvent {
   constructor() {
     if (this.constructor.instance) {
@@ -7,9 +9,9 @@ class ButtonInteractionEvent {
   }
 
   async event(interaction) {
-    // if (interaction.customId === "open_color_modal") {
-    //   await colorController.changeColorRequest(interaction);
-    // }
+    if (interaction.customId === "fishing_efficiency_3tier") {
+      await fishingView.sendEfficiencyInputModal(interaction);
+    }
   }
 }
 

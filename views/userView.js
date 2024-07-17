@@ -1,12 +1,9 @@
 const {
   EmbedBuilder,
   ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
-  StringSelectMenuBuilder,
 } = require("discord.js");
 
 exports.sendApiInputModal = async (interaction) => {
@@ -17,7 +14,6 @@ exports.sendApiInputModal = async (interaction) => {
   const input = new TextInputBuilder()
     .setCustomId("set_api_key_input")
     .setLabel("로스트아크 API Key를 등록해주세요.")
-    //.setMaxLength(20)
     .setStyle(TextInputStyle.Paragraph);
 
   const row = new ActionRowBuilder().addComponents(input);
