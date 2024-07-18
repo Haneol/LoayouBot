@@ -52,7 +52,9 @@ exports.scheduleRequest = async (interaction) => {
 };
 
 function filterSchedule(array, str) {
-  const today = new Date().toISOString().split("T")[0];
+  const date = new Date();
+  date.setHours(date.getHours() + 9); // 한국 시간으로 조정
+  const today = date.toISOString().split("T")[0];
 
   return array.filter((item) => {
     if (item.CategoryName !== str) return false;
@@ -73,16 +75,12 @@ function getCurrentRewardItemType(rewardItems) {
     for (const item of reward.Items) {
       if (Array.isArray(item.StartTimes) && item.StartTimes.length > 0) {
         const isCurrentItem = item.StartTimes.some((startTime) => {
-          const startTimestamp = Math.floor(
-            new Date(startTime).getTime() / 1000
-          );
           const nextStartTimestamp = item.StartTimes.find(
             (t) => Math.floor(new Date(t).getTime() / 1000) > now
           );
           return (
-            startTimestamp <= now &&
-            (!nextStartTimestamp ||
-              Math.floor(new Date(nextStartTimestamp).getTime() / 1000) > now)
+            !nextStartTimestamp ||
+            Math.floor(new Date(nextStartTimestamp).getTime() / 1000) > now
           );
         });
 

@@ -20,6 +20,12 @@ exports.run = async (client) => {
         .setName("낚시")
         .setDescription("낚시 효율을 계산합니다."),
       new SlashCommandBuilder()
+        .setName("수렵")
+        .setDescription("수렵 효율을 계산합니다."),
+      new SlashCommandBuilder()
+        .setName("고고학")
+        .setDescription("고고학 효율을 계산합니다."),
+      new SlashCommandBuilder()
         .setName("경매")
         .setDescription("경매 손익을 계산합니다.")
         .addIntegerOption(
