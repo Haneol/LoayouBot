@@ -12,6 +12,7 @@ const {
 const SlashCommandRoutes = require("./routes/slashCommandRoutes");
 const ButtonInteractionEvent = require("./events/buttonInteractionEvent");
 const ModalInteractionEvent = require("./events/modalInteractionEvent");
+const SelectMenuInteractionEvent = require("./events/selectMenuInteractionEvent");
 
 const client = new Client({
   intents: [
@@ -48,6 +49,7 @@ client.once(Events.ClientReady, async (readyClient) => {
 const slashCommandRoutes = new SlashCommandRoutes();
 const buttonInteractionEvent = new ButtonInteractionEvent();
 const modalInteractionEvent = new ModalInteractionEvent();
+const selectMenuInteractionEvent = new SelectMenuInteractionEvent();
 
 // 상호작용 이벤트 처리
 client.on(Events.InteractionCreate, async (interaction) => {
@@ -59,6 +61,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
         await modalInteractionEvent.event(interaction);
       else if (interaction.isChatInputCommand())
         await slashCommandRoutes.routes(interaction);
+      else if (interaction.isStringSelectMenu())
+        await selectMenuInteractionEvent.event(interaction);
     } catch (error) {
       logger.error("Error handling interaction:", error);
     }

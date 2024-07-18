@@ -3,7 +3,6 @@ const logger = require("../utils/logger");
 const fishingView = require("../views/fishingView");
 
 exports.efficiencyRequest = async (interaction) => {
-  //const api = new ApiUtil('https://developer-lostark.game.onstove.com', interaction.loayouUser.apiKey);
   await fishingView.sendEfficiencyEmbedMsg(interaction);
 };
 

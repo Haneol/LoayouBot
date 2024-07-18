@@ -2,6 +2,7 @@ const {
   ApplicationCommandType,
   ContextMenuCommandBuilder,
   SlashCommandBuilder,
+  SlashCommandIntegerOption,
 } = require("discord.js");
 const logger = require("../utils/logger");
 
@@ -17,6 +18,24 @@ exports.run = async (client) => {
       new SlashCommandBuilder()
         .setName("낚시효율")
         .setDescription("낚시 효율을 계산합니다."),
+      new SlashCommandBuilder()
+        .setName("경매")
+        .setDescription("경매 손익을 계산합니다.")
+        .addIntegerOption(
+          new SlashCommandIntegerOption()
+            .setName("가격")
+            .setDescription("경매 가격을 입력해주세요.")
+            .setRequired(true)
+        ),
+      new SlashCommandBuilder()
+        .setName("수수료")
+        .setDescription("거래 수수료를 계산합니다.")
+        .addIntegerOption(
+          new SlashCommandIntegerOption()
+            .setName("가격")
+            .setDescription("상대방이 받을 가격을 입력해주세요.")
+            .setRequired(true)
+        ),
     ];
 
     await client.application.commands.set([

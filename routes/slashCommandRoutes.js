@@ -1,5 +1,6 @@
 const logger = require("../utils/logger");
 const fishingController = require("../controllers/fishingController");
+const calculateController = require("../controllers/calculatorController");
 
 const { checkAPIKey } = require("../middlewares/apiMiddleware");
 
@@ -15,6 +16,12 @@ class SlashCommandRoutes {
       await checkAPIKey(interaction, async () => {
         await fishingController.efficiencyRequest(interaction);
       });
+    } else if (commandName === "경매") {
+      logger.info(`유저 ${interaction.member.user.username} : 경매`);
+      await calculateController.auctionCalculatorRequest(interaction);
+    } else if (commandName === "수수료") {
+      logger.info(`유저 ${interaction.member.user.username} : 수수료`);
+      await calculateController.sendMoneyCalculatorRequest(interaction);
     }
   }
 }
