@@ -5,6 +5,7 @@ const calculateController = require("../controllers/calculatorController");
 const newsController = require("../controllers/newsController");
 const scheduleController = require("../controllers/scheduleController");
 const helpController = require("../controllers/helpController");
+const archaeologyController = require("../controllers/archaeologyController");
 
 const { checkAPIKey } = require("../middlewares/apiMiddleware");
 
@@ -28,7 +29,7 @@ class SlashCommandRoutes {
     } else if (commandName === "고고학") {
       logger.info(`유저 ${interaction.member.user.username} : 고고학효율`);
       await checkAPIKey(interaction, async () => {
-        //await fishingController.efficiencyRequest(interaction);
+        await archaeologyController.efficiencyRequest(interaction);
       });
     } else if (commandName === "경매") {
       logger.info(`유저 ${interaction.member.user.username} : 경매`);

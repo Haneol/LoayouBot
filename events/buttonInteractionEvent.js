@@ -1,5 +1,6 @@
 const fishingView = require("../views/fishingView");
 const huntingView = require("../views/huntingView");
+const archaeologyView = require("../views/archaeologyView");
 
 class ButtonInteractionEvent {
   constructor() {
@@ -14,6 +15,8 @@ class ButtonInteractionEvent {
       await fishingView.sendEfficiencyInputModal(interaction);
     } else if (interaction.customId === "hunting_efficiency_3tier") {
       await huntingView.sendEfficiencyInputModal(interaction);
+    } else if (interaction.customId === "archaeology_efficiency_3tier") {
+      await archaeologyView.sendEfficiencyInputModal(interaction);
     }
   }
 }
