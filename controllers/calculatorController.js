@@ -1,4 +1,3 @@
-const logger = require("../utils/logger");
 const calculateView = require("../views/calculatorView");
 
 exports.sendMoneyCalculatorRequest = async (interaction) => {

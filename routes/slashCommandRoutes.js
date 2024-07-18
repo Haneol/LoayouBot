@@ -2,6 +2,7 @@ const logger = require("../utils/logger");
 const fishingController = require("../controllers/fishingController");
 const calculateController = require("../controllers/calculatorController");
 const newsController = require("../controllers/newsController");
+const scheduleController = require("../controllers/scheduleController");
 
 const { checkAPIKey } = require("../middlewares/apiMiddleware");
 
@@ -30,6 +31,9 @@ class SlashCommandRoutes {
       });
     } else if (commandName === "스케줄") {
       logger.info(`유저 ${interaction.member.user.username} : 스케줄`);
+      await checkAPIKey(interaction, async () => {
+        await scheduleController.scheduleRequest(interaction);
+      });
     }
   }
 }

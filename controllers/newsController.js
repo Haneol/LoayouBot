@@ -1,5 +1,6 @@
 const ApiUtil = require("../utils/apiUtil");
 const newsView = require("../views/newsView");
+const logger = require("../utils/logger");
 
 const {
   miniCheckEmoji,
@@ -41,7 +42,7 @@ exports.newsRequest = async (interaction) => {
 
     await newsView.sendNewsEmbedMsg(interaction, news, type);
   } catch (e) {
-    logger.error("ERROR calculate fishing efficiency: ", e);
+    logger.error("ERROR news: ", e);
     await newsView.sendNewsFailEmbedMsg(
       interaction,
       "공지사항을 불러오는데 실패하였습니다."
