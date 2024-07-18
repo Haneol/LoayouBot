@@ -55,7 +55,7 @@ exports.sendEfficiencyEmbedMsg = async (interaction) => {
       }
     )
     .setFooter({
-      text: "그럴 수 있지",
+      text: "로아유봇 /낚시",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 
@@ -186,7 +186,7 @@ exports.sendEfficiencyCalculateEmbedMsg = async (
       }
     )
     .setFooter({
-      text: `3티어 낚시 효율 계산기`,
+      text: `로아유봇 /낚시`,
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 
@@ -202,7 +202,7 @@ exports.sendEfficiencyCalculateFailEmbedMsg = async (interaction, str) => {
     .setTitle("🚫 낚시 효율")
     .setDescription(str)
     .setFooter({
-      text: "그럴 수 있지",
+      text: "로아유봇 /낚시",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 

@@ -29,7 +29,7 @@ exports.setApiDoneEmbedMsg = async (interaction) => {
     .setColor(0xf14966)
     .setTitle("🔐 API Key가 등록되었습니다.")
     .setFooter({
-      text: "그럴 수 있지",
+      text: "로아유봇",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 
@@ -45,7 +45,7 @@ exports.setApiFailEmbedMsg = async (interaction) => {
     .setColor(0xf14966)
     .setTitle("🚫 API Key 등록에 실패했습니다.")
     .setFooter({
-      text: "그럴 수 있지",
+      text: "로아유봇",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 

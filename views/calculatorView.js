@@ -14,7 +14,7 @@ exports.sendMoneyCalculatorEmbedMsg = async (interaction, price) => {
     .setDescription(`보낼 금액 : ***${price}*** ${goldEmoji}`)
 
     .setFooter({
-      text: "경매 손익 계산기",
+      text: "로아유봇 /경매",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 
@@ -71,7 +71,7 @@ exports.sendAuctionCalculatorEmbedMsg = async (
     )
 
     .setFooter({
-      text: "경매 손익 계산기",
+      text: "로아유봇 /경매",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 
@@ -132,7 +132,7 @@ exports.updateAuctionCalculatorEmbedMsg = async (
     )
 
     .setFooter({
-      text: "경매 손익 계산기",
+      text: "로아유봇 /경매",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 

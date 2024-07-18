@@ -3,6 +3,7 @@ const fishingController = require("../controllers/fishingController");
 const calculateController = require("../controllers/calculatorController");
 const newsController = require("../controllers/newsController");
 const scheduleController = require("../controllers/scheduleController");
+const helpController = require("../controllers/helpController");
 
 const { checkAPIKey } = require("../middlewares/apiMiddleware");
 
@@ -12,7 +13,7 @@ class SlashCommandRoutes {
 
     if (commandName === "도움말") {
       logger.info(`유저 ${interaction.member.user.username} : 도움말`);
-      //await helpController.help(interaction);
+      await helpController.help(interaction);
     } else if (commandName === "낚시") {
       logger.info(`유저 ${interaction.member.user.username} : 낚시효율`);
       await checkAPIKey(interaction, async () => {

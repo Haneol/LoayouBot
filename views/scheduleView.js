@@ -66,7 +66,7 @@ exports.sendScheduleEmbedMsg = async (
       )
       .setThumbnail("attachment://merged_image.png")
       .setFooter({
-        text: "스케줄",
+        text: "로아유봇 /스케줄",
         iconURL: "https://imgur.com/IhMjCEt.jpg",
       });
 
@@ -86,7 +86,7 @@ exports.sendScheduleFailEmbedMsg = async (interaction, str) => {
     .setTitle("🚫 스케줄")
     .setDescription(str)
     .setFooter({
-      text: "스케줄",
+      text: "로아유봇 /스케줄",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 

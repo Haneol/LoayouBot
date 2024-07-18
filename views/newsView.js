@@ -24,7 +24,7 @@ exports.sendNewsEmbedMsg = async (interaction, news, type) => {
     .setTitle(`📢 공지사항`)
     .setDescription(str)
     .setFooter({
-      text: "공지사항",
+      text: "로아유봇 /공지",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 
@@ -40,7 +40,7 @@ exports.sendNewsFailEmbedMsg = async (interaction, str) => {
     .setTitle("🚫 공지사항")
     .setDescription(str)
     .setFooter({
-      text: "",
+      text: "로아유봇 /공지",
       iconURL: "https://imgur.com/IhMjCEt.jpg",
     });
 
