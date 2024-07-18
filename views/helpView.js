@@ -6,7 +6,7 @@ const {
 } = require("discord.js");
 
 // 로아유봇 버전 명시
-const loayouVersion = "v2.0.0";
+const loayouVersion = "v2.1.0";
 
 exports.sendHelpEmbededMsg = async (msg) => {
   //임베딩 추가
