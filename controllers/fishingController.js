@@ -45,7 +45,6 @@ exports.efficiencyCalculate = async (interaction) => {
   if (
     !isValidInput(rareFishCountInput) ||
     !isValidInput(uncommonFishCountInput) ||
-    !isValidInput(commonFishCountInput) ||
     !isValidInput(commonFishCountInput)
   ) {
     await fishingView.sendEfficiencyCalculateFailEmbedMsg(

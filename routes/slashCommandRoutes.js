@@ -1,5 +1,6 @@
 const logger = require("../utils/logger");
 const fishingController = require("../controllers/fishingController");
+const huntingController = require("../controllers/huntingController");
 const calculateController = require("../controllers/calculatorController");
 const newsController = require("../controllers/newsController");
 const scheduleController = require("../controllers/scheduleController");
@@ -18,6 +19,16 @@ class SlashCommandRoutes {
       logger.info(`유저 ${interaction.member.user.username} : 낚시효율`);
       await checkAPIKey(interaction, async () => {
         await fishingController.efficiencyRequest(interaction);
+      });
+    } else if (commandName === "수렵") {
+      logger.info(`유저 ${interaction.member.user.username} : 수렵효율`);
+      await checkAPIKey(interaction, async () => {
+        await huntingController.efficiencyRequest(interaction);
+      });
+    } else if (commandName === "고고학") {
+      logger.info(`유저 ${interaction.member.user.username} : 고고학효율`);
+      await checkAPIKey(interaction, async () => {
+        //await fishingController.efficiencyRequest(interaction);
       });
     } else if (commandName === "경매") {
       logger.info(`유저 ${interaction.member.user.username} : 경매`);

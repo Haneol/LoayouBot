@@ -1,5 +1,6 @@
 const userController = require("../controllers/userController");
 const fishingController = require("../controllers/fishingController");
+const huntingController = require("../controllers/huntingController");
 
 class ModalInteractionEvent {
   constructor() {
@@ -14,6 +15,8 @@ class ModalInteractionEvent {
       await userController.setApiKey(interaction);
     } else if (interaction.customId === "fishing_efficiency") {
       await fishingController.efficiencyCalculate(interaction);
+    } else if (interaction.customId === "hunting_efficiency") {
+      await huntingController.efficiencyCalculate(interaction);
     }
   }
 }
