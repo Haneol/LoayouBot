@@ -8,6 +8,14 @@ const {
   TextInputStyle,
 } = require("discord.js");
 
+const {
+  goldEmoji,
+  oreha3Emoji,
+  rarefish3Emoji,
+  uncommonfish3Emoji,
+  commonfish3Emoji,
+} = require("../models/emoji");
+
 exports.sendEfficiencyEmbedMsg = async (interaction) => {
   // 버튼 추가
   const button = new ButtonBuilder()
@@ -38,8 +46,7 @@ exports.sendEfficiencyEmbedMsg = async (interaction) => {
     .addFields(
       {
         name: "필수 입력 항목",
-        value:
-          "<:rarefish3:1263083861588578426> 오레하 태양 잉어, <:uncommonfish3:1263083863614423040> 붉은 살 생선, <:commonfish3:1263083858539053120> 생선 개수",
+        value: `${rarefish3Emoji} 오레하 태양 잉어, ${uncommonfish3Emoji} 붉은 살 생선, ${commonfish3Emoji} 생선 개수`,
       },
       {
         name: "선택 입력 항목",
@@ -123,7 +130,7 @@ exports.sendEfficiencyCalculateEmbedMsg = async (
   priceM,
   priceRestFish,
   priceFish,
-  priceBuy,
+  priceAdditionalBuy,
   mostEfficient
 ) => {
   let str;
@@ -137,12 +144,23 @@ exports.sendEfficiencyCalculateEmbedMsg = async (
 
   const timestamp = Math.floor(Date.now() / 1000);
 
+  let additionalFishCount = "";
+  if (mostEfficient[3][0] > 0) {
+    additionalFishCount += `\n  - ${rarefish3Emoji} x ${mostEfficient[3][0]} 세트 구매`;
+  }
+  if (mostEfficient[3][1] > 0) {
+    additionalFishCount += `\n  - ${uncommonfish3Emoji} x ${mostEfficient[3][1]} 세트 구매`;
+  }
+  if (mostEfficient[3][2] > 0) {
+    additionalFishCount += `\n  - ${commonfish3Emoji} x ${mostEfficient[3][2]} 세트 구매`;
+  }
+
   // 임베드 메시지 생성
   const embed = new EmbedBuilder()
     .setColor(0xf14966)
     .setTitle(`🎣 ${interaction.user.displayName}님의 낚시 효율`)
     .setDescription(
-      `[<:rarefish3:1263083861588578426>x${rareFishCount} | <:uncommonfish3:1263083863614423040>x${uncommonFishCount} | <:commonfish3:1263083858539053120>x${commonFishCount}]\n가장 효율적인 판매 방법은 아래와 같습니다.\n기대수익: ***${mostEfficient[1]}*** <:Gold:1263074112058818705> <t:${timestamp}:R>` +
+      `[${rarefish3Emoji}x${rareFishCount} | ${uncommonfish3Emoji}x${uncommonFishCount} | ${commonfish3Emoji}x${commonFishCount}]\n<t:${timestamp}:R>\n가장 효율적인 판매 방법은 아래와 같습니다.\n기대수익: ***${mostEfficient[1]}*** ${goldEmoji}` +
         "```" +
         `឵${str}឵` +
         "```"
@@ -150,19 +168,21 @@ exports.sendEfficiencyCalculateEmbedMsg = async (
     .addFields(
       {
         name: "현재 아이템 가격",
-        value: `<:oreha0:1263083860506181672> 최상급 오레하 융화재료: ***${orehaPrice}*** <:Gold:1263074112058818705>\n<:rarefish3:1263083861588578426> 오레하 태양 잉어 x 100: ***${rareFishPrice}*** <:Gold:1263074112058818705>\n<:uncommonfish3:1263083863614423040> 붉은 살 생선 x 100: ***${uncommonFishPrice}*** <:Gold:1263074112058818705>\n<:commonfish3:1263083858539053120> 생선 x 100: ***${commonFishPrice}*** <:Gold:1263074112058818705>`,
+        value: `${oreha3Emoji} 최상급 오레하 융화재료: ***${orehaPrice}*** ${goldEmoji}\n${rarefish3Emoji} 오레하 태양 잉어 x 100: ***${rareFishPrice}*** ${goldEmoji}\n${uncommonfish3Emoji} 붉은 살 생선 x 100: ***${uncommonFishPrice}*** ${goldEmoji}\n${commonfish3Emoji} 생선 x 100: ***${commonFishPrice}*** ${goldEmoji}`,
       },
       {
         name: "최상급 오레하 제작 수익",
-        value: `오레하 제작 수익(기대값): ***${priceE}*** <:Gold:1263074112058818705>\n오레하 제작 수익(최소값): ***${priceM}*** <:Gold:1263074112058818705>`,
+        value: `- 오레하 제작 수익(기대값): ***${priceE}*** ${goldEmoji}\n- 오레하 제작 수익(최소값): ***${priceM}*** ${goldEmoji}`,
       },
       {
         name: "남은 물고기 수익",
-        value: `직접 판매: ***${priceRestFish}*** <:Gold:1263074112058818705>\n생선 추가 구매 후, 제작 판매: ***${priceBuy}*** <:Gold:1263074112058818705>`,
+        value:
+          `- 직접 판매: ***${priceRestFish}*** ${goldEmoji}\n- 생선 추가 구매 후, 제작 판매(${oreha3Emoji} ${mostEfficient[2]} 세트): ***${priceAdditionalBuy}*** ${goldEmoji}` +
+          additionalFishCount,
       },
       {
         name: "생선 판매",
-        value: `오레하 제작 X: ***${priceFish}*** <:Gold:1263074112058818705>`,
+        value: `오레하 제작 X: ***${priceFish}*** ${goldEmoji}`,
       }
     )
     .setFooter({

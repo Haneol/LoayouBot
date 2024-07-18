@@ -139,12 +139,14 @@ exports.efficiencyCalculate = async (interaction) => {
 
     // 판매 가격 기대값
     const priceE = Math.floor(
-      orehaE * (orehaPrice - (300 / countPerBundle) * (1 - costPercent / 100))
+      orehaE *
+        (orehaPrice * 0.95 - (300 / countPerBundle) * (1 - costPercent / 100))
     );
 
     // 판매 가격 최소값
     const priceM = Math.floor(
-      orehaM * (orehaPrice - (300 / countPerBundle) * (1 - costPercent / 100))
+      orehaM *
+        (orehaPrice * 0.95 - (300 / countPerBundle) * (1 - costPercent / 100))
     );
 
     //남은 생선 번들
@@ -160,15 +162,17 @@ exports.efficiencyCalculate = async (interaction) => {
 
     // 나머지 낚시재료 판매 가격
     const priceRestFish =
-      Math.floor(rareRestFishBundle * rareFishPrice) +
-      Math.floor(uncommonRestFishBundle * uncommonFishPrice) +
-      Math.floor(commonRestFishBundle * commonFishPrice);
+      Math.floor(rareRestFishBundle * rareFishPrice * 0.95) +
+      Math.floor(uncommonRestFishBundle * uncommonFishPrice * 0.95) +
+      Math.floor(commonRestFishBundle * commonFishPrice * 0.95);
 
     // 낚시재료만 판매 가격
     const priceFish =
-      Math.floor(Math.floor(rareFishCount / 100) * rareFishPrice) +
-      Math.floor(Math.floor(uncommonFishCount / 100) * uncommonFishPrice) +
-      Math.floor(Math.floor(commonFishCount / 100) * commonFishPrice);
+      Math.floor(Math.floor(rareFishCount / 100) * rareFishPrice * 0.95) +
+      Math.floor(
+        Math.floor(uncommonFishCount / 100) * uncommonFishPrice * 0.95
+      ) +
+      Math.floor(Math.floor(commonFishCount / 100) * commonFishPrice * 0.95);
 
     // 부족한 재료 구매 후 제작 판매 가격
     const orehaBundleRareFish = Math.floor(
@@ -187,37 +191,58 @@ exports.efficiencyCalculate = async (interaction) => {
       orehaBundleCommonFish
     );
 
-    const priceBuy = Math.floor(
-      countPerBundle *
-        maxOrehaBundle *
-        (orehaPrice - (300 / countPerBundle) * (1 - costPercent / 100)) -
-        (Math.ceil(
-          ((maxOrehaBundle + orehaBundleCount) * 52 - rareFishCount) / 100
-        ) *
-          rareFishPrice +
-          Math.ceil(
-            ((maxOrehaBundle + orehaBundleCount) * 69 - uncommonFishCount) / 100
-          ) *
-            uncommonFishPrice +
-          Math.ceil(
-            ((maxOrehaBundle + orehaBundleCount) * 142 - commonFishCount) / 100
-          ) *
-            commonFishPrice)
+    const AdditionalBuyRarefish = Math.ceil(
+      maxOrehaBundle * 52 - (rareFishCount - orehaBundleCount * 52) > 0
+        ? (maxOrehaBundle * 52 - (rareFishCount - orehaBundleCount * 52)) / 100
+        : 0
     );
+
+    const AdditionalBuyUncommonfish = Math.ceil(
+      maxOrehaBundle * 69 - (uncommonFishCount - orehaBundleCount * 69) > 0
+        ? (maxOrehaBundle * 69 - (uncommonFishCount - orehaBundleCount * 69)) /
+            100
+        : 0
+    );
+
+    const AdditionalBuyCommonfish = Math.ceil(
+      maxOrehaBundle * 142 - (commonFishCount - orehaBundleCount * 142) > 0
+        ? (maxOrehaBundle * 142 - (commonFishCount - orehaBundleCount * 142)) /
+            100
+        : 0
+    );
+
+    const priceAdditionalBuy =
+      Math.floor(
+        countPerBundle *
+          maxOrehaBundle *
+          (orehaPrice * 0.95 - (300 / countPerBundle) * (1 - costPercent / 100))
+      ) -
+      (Math.ceil(AdditionalBuyRarefish * rareFishPrice) +
+        Math.ceil(AdditionalBuyUncommonfish * uncommonFishPrice) +
+        Math.ceil(AdditionalBuyCommonfish * commonFishPrice));
 
     const mostEfficientPrice = Math.max(
       priceE + priceRestFish,
       priceFish,
-      priceE + priceBuy
+      priceE + priceAdditionalBuy
     );
 
-    let mostEfficient;
+    let mostEfficient = [
+      0,
+      mostEfficientPrice,
+      maxOrehaBundle,
+      [
+        AdditionalBuyRarefish,
+        AdditionalBuyUncommonfish,
+        AdditionalBuyCommonfish,
+      ],
+    ];
     if (mostEfficientPrice === priceFish) {
-      mostEfficient = [1, mostEfficientPrice];
+      mostEfficient[0] = 1;
     } else if (mostEfficientPrice === priceE + priceRestFish) {
-      mostEfficient = [0, mostEfficientPrice];
+      mostEfficient[0] = 0;
     } else {
-      mostEfficient = [2, mostEfficientPrice];
+      mostEfficient[0] = 2;
     }
 
     await fishingView.sendEfficiencyCalculateEmbedMsg(
@@ -233,7 +258,7 @@ exports.efficiencyCalculate = async (interaction) => {
       priceM,
       priceRestFish,
       priceFish,
-      priceBuy,
+      priceAdditionalBuy,
       mostEfficient
     );
   } catch (e) {
